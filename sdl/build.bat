@@ -1,4 +1,6 @@
-:: @echo off
+@echo off
+
+setlocal
 
 set LIBDIR=%CD%\..
 
@@ -59,6 +61,15 @@ vcupgrade VisualC\SDLmain\SDLmain.vcproj
 
 sed -i 's/MultiThreadedDLL/MultiThreaded/g' VisualC\SDL\SDL.vcxproj
 sed -i 's/MultiThreadedDLL/MultiThreaded/g' VisualC\SDLmain\SDLmain.vcxproj
+
+sed -i 's/DynamicLibrary/StaticLibrary/g' VisualC\SDL\SDL.vcxproj
+sed -i 's/DynamicLibrary/StaticLibrary/g' VisualC\SDLmain\SDLmain.vcxproj
+
+sed -i '/windx5/d' VisualC\SDL\SDL.vcxproj
+sed -i '/Windx5/d' VisualC\SDL\SDL.vcxproj
+
+sed -i '/SDL_AUDIO_DRIVER_DSOUND/d' include/SDL_config_win32.h
+sed -i '/SDL_VIDEO_DRIVER_DDRAW/d' include/SDL_config_win32.h
 
 msbuild VisualC\SDL\SDL.vcxproj /p:Configuration=Release /p:Platform=%targetarch% /t:rebuild
 msbuild VisualC\SDLmain\SDLmain.vcxproj /p:Configuration=Release /p:Platform=%targetarch% /t:rebuild
